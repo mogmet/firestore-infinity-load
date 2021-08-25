@@ -8,10 +8,16 @@ export default class RoomService {
   private _rooms: Room[] = []
   private nextSnapshot: DocumentSnapshot | null = null
 
+  /**
+   * 現在のroom一覧
+   */
   get rooms(): Room[] {
     return this._rooms
   }
 
+  /**
+   * nextSnapshotがなければ読み込むものはもうない
+   */
   get canMoreLoad(): boolean {
     return !!this.nextSnapshot
   }
@@ -20,12 +26,18 @@ export default class RoomService {
     this.repository = new RoomRepository()
   }
 
+  /**
+   * roomの一覧を取得する。
+   */
   async fetchRooms(): Promise<void> {
     const response = await this.repository.fetchRooms()
     this.nextSnapshot = response.nextSnapshot
     this._rooms = response.results
   }
 
+  /**
+   * 追加でroom一覧を読み込む
+   */
   async fetchMoreRooms(): Promise<void> {
     if (!this.nextSnapshot) {
       return

@@ -20,6 +20,11 @@ export default class RoomRepository {
     })
   }
 
+  /**
+   * firestoreからroomの一覧を取得する
+   * @param limit
+   * @param startAtSnapshot
+   */
   async fetchRooms(
     {
       limit = this.limit,
